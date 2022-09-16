@@ -61,7 +61,7 @@
           <p>Alejandro</p>
 
           <div class="carrito" id="carrito">
-            <i class="fa-solid fa-cart-shopping  " ></i>
+            <i class="fa-solid fa-cart-shopping" id="icono-carrito" ></i>
             <p id="parrafo-carrito">(0)</p>
           </div>
 
@@ -97,10 +97,16 @@
 
           
         </table>
-
-        <p class="mensaje-carrito off">Su carrito se encuentra vacío</p>
+        <div id="mensajeError">
+          
+        </div>
       </fieldset>
 
+      <div class="botonesCarrito">
+        <button class="btn" id="btn-confirmar-compra">Confirmar Compra</button>
+        <button class="btn" id="btn-vaciar">Vaciar Carrito</button>
+        <button class="btn" id="btn-salir-carrito">Salir</button>
+      </div>
     </div>
 
 

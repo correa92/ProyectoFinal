@@ -96,6 +96,7 @@ html{
     background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.42620798319327735) 76%, rgba(255,255,255,0) 100%);
 }
 .contenedor1{
+    
     background: url(../img/1653297680_702523_1653300885_noticia_normal.jpg);
     height: 100vh;
     background-size: cover;
@@ -223,8 +224,9 @@ i{
 
 
 .contenedor-carrito{
-    background-color: green;
+    background: var(--silver);
     position: fixed;
+    visibility: hidden;
     top: 0;
     right: 0;
     width: 100%;
@@ -233,16 +235,36 @@ i{
 
 @media (min-width: 768px) {
   .contenedor-carrito{
-    display: none;
-    background: yellow;
-    width: 1000px;
+    
+    
+    width: auto;
     padding: 10px;
 
 
     }  
 }
 .carrito{
+
     display: flex;
     justify-items: center;
     align-items: center;
 }
+
+.activo {
+    visibility:visible;
+}
+
+.resultado{
+    font-weight: bold;
+    font-size: 30px;
+}
+
+fieldset{
+    text-align: center;
+}
+
+legend{
+    font-size: 30px;
+    font-weight: bold;
+}
+

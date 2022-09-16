@@ -157,15 +157,44 @@ document.body.onload = function () {
     btnReset.addEventListener('click', ()=>{
       let contenedor = document.getElementById('peliculas-contenedor');
       eliminarError('busqueda');
-    contenedor.innerHTML = "";
-  crearCartelera()} );
+      contenedor.innerHTML = "";
+      crearCartelera()} );
 
 // ------------------------------------carrito de compras------------------------------------
 
+let btnCarrito = document.getElementById('icono-carrito');
+btnCarrito.addEventListener('click',()=>{ 
+  btnCarrito.classList.add('activo');
+  mostrarCarrito()});
+
+let btnSalir = document.getElementById('btn-salir-carrito');
+btnSalir.addEventListener('click',()=>{
+let contenedor = document.getElementById('contenedor-carrito');
+contenedor.classList.remove('activo');
+})
 
 
+let btnVaciar = document.getElementById('btn-vaciar');
+btnVaciar.addEventListener('click',()=>{
+  let confirmar = confirm('¿Seguro desea vaciar el carrito?');
+  if(confirmar){
+    carrito=[];
+    mostrarCarrito();
+  }
+});
 
+let btnConfirmar = document.getElementById('btn-confirmar-compra');
+btnConfirmar.addEventListener('click',()=>{
 
+  
+  let confirmar = confirm('¿Desea confirmar la compra?');
+ mostrarCarrito();
+  if(confirmar){
+    alert('Compra realiza con exito');
+    carrito = [];
+    mostrarCarrito();
+  }
+});
 
 
 //-------------------------------------Funciones----------------------------------------------
@@ -442,7 +471,7 @@ function filtrarIdioma(boton,formatoPeli) {
 function traerBtn() {
   let btnComprar = document.querySelectorAll('.btn-comprar');
   btnComprar.forEach(element => {
-    element.addEventListener('click', ()=>{console.log(element.id);
+    element.addEventListener('click', ()=>{
     agregarAlCarrito(element.id)})
 
     }); 
@@ -450,7 +479,7 @@ function traerBtn() {
 
 function agregarAlCarrito(id){
   let objeto = peliculasEnCartelera.filter((e)=> e.id == id);
-  console.log(objeto[0]);
+ 
   let confirmar = confirm(`¿Desea agregar ${objeto[0].nombrePelicula} en ${objeto[0].formato} al carrito?`);
 
   if(confirmar){
@@ -473,6 +502,93 @@ function actualizaCantidad() {
   let cantidadCarrito = document.getElementById('parrafo-carrito');
     cantidadCarrito.innerText = `(${carrito.length})`;
 }
+
+
+function mostrarCarrito() {
+ //elimino filas en el caso que halla, deben tener la class fila
+  let resetTabla = document.querySelectorAll('.filas');
+  resetTabla.forEach(element => {
+    element.remove();
+  });
+  
+  let mensajeError =document.getElementById('mensajeError');
+  mensajeError.innerHTML = "";
+  
+  if(carrito.length == 0 ){
+
+    let parrafo = document.createElement('P');
+    parrafo.classList.add('mensaje-carrito');
+    parrafo.innerText = "¡Su carrito se encuentra vacío!";
+    mensajeError.appendChild(parrafo);
+
+  }else{
+
+    
+    //renderizo cada elemento que tengo en el carrito  
+      for (const elem of carrito) {
+        let tabla = document.getElementById("tabla");
+        let contenedorTR = document.createElement("tr");
+        let subtotal = elem.subtotal();
+        contenedorTR.classList.add('filas')
+        contenedorTR.innerHTML = `
+                                    <td>${elem.nombrePelicula}</td>
+                                    <td>${elem.formato}</td>
+                                    <td>$ ${elem.precio}</td>
+                                    <td>X</td>
+                                    <td>${elem.cantidadTicket}</td>
+                                    <td>$ ${subtotal}</td>
+                                  `;
+        
+        tabla.appendChild(contenedorTR);
+      }
+      
+      total = carrito.reduce((acum, elem) => acum + elem.precio * elem.cantidadTicket,0);
+    
+      let tabla = document.getElementById("tabla");
+      let tr1 = document.createElement("tr");
+      tr1.classList = "resultado filas";
+      tr1.innerHTML = `
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td class="total">TOTAL</td>
+      <td class="total">$ ${total}</td>
+    
+    `;
+    
+      tabla.append(tr1);
+    
+      
+    }
+    
+    let contenedor = document.getElementById('contenedor-carrito');
+    contenedor.classList.add("activo");
+    
+    
+
+
+
+
+
+}
+
+//verifica si el pedido de la pelicula ya se encuentra en el carrito
+function verifica(params) {
+  return;
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
