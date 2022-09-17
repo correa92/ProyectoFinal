@@ -1,45 +1,22 @@
-document.body.onload = function () {
-  class Pelicula {
-    constructor(id,nombrePelicula,formato,genero,estreno,idioma,sala,precio,imagen) {
-      this.id = id;
-      this.nombrePelicula = nombrePelicula;
-      this.formato = formato;
-      this.genero = genero;
-      this.estreno = estreno;
-      this.idioma = idioma;
-      this.sala = sala;
-      this.precio = precio;
-      this.imagen = imagen;
-    }
+import {crearCartelera,
+  filtrarPeli,
+  eliminarPeliculasCartelera,
+  buscarPelicula,
+  eliminarError,
+  filtrarIdioma,
+  traerBtn,
+  main
+} from "./Cartelera.js";
+import {Pelicula} from "./Pelicula.js";
+import {mostrarCarrito, actualizaCantidad, escuchaBtnEliminar} from "./Carrito.js";
+import { pedirUsuario } from "./Cliente.js";
 
-  } //fin class Pelicula
-
-  class Carrito {
-    constructor(cantidadTicket, precio, nombrePelicula, formato) {
-      this.cantidadTicket = cantidadTicket;
-      this.precio = precio;
-      this.nombrePelicula = nombrePelicula;
-      this.formato = formato;
-    }
-
-    subtotal = () => this.precio * this.cantidadTicket;
-
-    mostrarCarrito() {
-      return `Pelicula: ${this.nombrePelicula}
-      Formato: ${this.formato}
-      Cantidad tickets: ${this.cantidadTicket}
-      Precio x tickets: ${this.precio}
-      Total: $${this.subtotal()}
-      `;
-    }
-  }
-
-  //--------------variables-------------------------------------------------------------------------------------------------------------
+//-------------------------------variables---------------------------------
+  
   const formatosDisponibles = ["2D", "3D", "4D", "5D"];
   const precioPorSala = [500, 600, 700, 800];
   const generosDisponibles = ["ACCIÓN","SUSPENSO","TERROR","COMEDIA","ROMANTICA","INFANTIL"];
   const idiomasDisponibles = ["INGLÉS-SUBTITULADO", "LATINO"];
-  
 
   let peli1 = new Pelicula(0,"THOR, AMOR Y TRUENO",formatosDisponibles[1],generosDisponibles[0],"02/10/2022",idiomasDisponibles[1],1,precioPorSala[1],"./img/thor-amor-y-trueno-500x760.jpg");
   let peli2 = new Pelicula(1,"JACK EN LA CAJA MALDITA",formatosDisponibles[0],"TERROR","08/12/2021",idiomasDisponibles[0],2,precioPorSala[0],"./img/jack-en-la-caja-maldita-2-el-despertar.jpg");
@@ -50,546 +27,241 @@ document.body.onload = function () {
   let peli7 = new Pelicula(6,"TREN BALA",formatosDisponibles[1],"ACCIÓN","20/09/2022",idiomasDisponibles[1],7,precioPorSala[1],"./img/tren-bala-500x760.jpg");
   let peli8 = new Pelicula(7,"PRINCESA POR ACCIDENTE",formatosDisponibles[1],"INFANTIL","09/10/2022",idiomasDisponibles[1],8,precioPorSala[1],"./img/princesa-por-accidente-500x760.jpg");
 
+  export let peliculasEnCartelera = [peli1,peli2,peli3,peli4,peli5,peli6,peli7,peli8];
+  
+  // export let carritoCompra = carrito;
+  export let carritoCompra = [];
 
-  let peliculasEnCartelera = [peli1, peli2, peli3,peli4,peli5,peli6,peli7,peli8];
-  let carrito = [];
+document.body.onload = function () {  
+
+
   //-----------------------------------------------Programa Principal-----------------------------------------------------------------------------
+  //muestro el contenido principal
+  main();
+  pedirUsuario();
+ //Muestro en la pantalla principal las peliculas disponibles
+  crearCartelera(peliculasEnCartelera);
 
-  crearCartelera();
   //-----------------------------------------------botones-------------------
+
+  //----------------------funciones para el boton 2D-------------------
   let filtro2D = document.getElementById("btn-2D");
   //escucho el boton 2D
-  filtro2D.addEventListener('click',()=>{
-
+  filtro2D.addEventListener("click", () => { 
+    // elimino del DOM todas las peliculas de la cartelera
+    eliminarPeliculasCartelera();
     //filtro las peliculas que esten en esta categoria
-    filtrarPeli("btn-2D","2D",'formato');
+    filtrarPeli("btn-2D", "2D",peliculasEnCartelera);
     //en el caso que halla un cartel de error generado por otra funcion elimino este cartel
-    eliminarError('busqueda');
-    //traigo los botones de comprar de las peliculas
-    traerBtn(); 
-    // elimino del DOM todas las peliculas de la cartelera
-    eliminarPeliculasCartelera();
+    eliminarError("busqueda");
+    //traigo los botones de comprar de las peliculas y si selecciono un boton ejecuto la funcion agregarAlCarrito (que esta dentro de traerBtn)
+    traerBtn();
 
-
-    if(!filtro2D.classList.contains('btn-activado')){
+    if (!filtro2D.classList.contains("btn-activado")) {
       // si el boton 2D no está activado, entonces pongo la cartelera completa
-      crearCartelera();
-    } });
-
-  let filtro3D = document.getElementById("btn-3D");
-  filtro3D.addEventListener('click',()=>{filtrarPeli("btn-3D","3D");
-  eliminarError('busqueda');
-  //traigo los botones de comprar de las peliculas
-  traerBtn(); 
-  eliminarPeliculasCartelera();
-    if(!filtro3D.classList.contains('btn-activado')){
-      crearCartelera();
-    } });
-
-  let filtro4D = document.getElementById("btn-4D");
-  filtro4D.addEventListener('click',()=>{filtrarPeli("btn-4D","4D");
-  eliminarError('busqueda');
-  //traigo los botones de comprar de las peliculas
-  traerBtn(); 
-  eliminarPeliculasCartelera();
-    if(!filtro4D.classList.contains('btn-activado')){
-      crearCartelera();
-    } });
-
-  let filtro5D = document.getElementById("btn-5D");
-  filtro5D.addEventListener('click',()=>{filtrarPeli("btn-5D","5D")
-  eliminarError('busqueda');
-  //traigo los botones de comprar de las peliculas
-  traerBtn(); 
-  eliminarPeliculasCartelera();
-    if(!filtro5D.classList.contains('btn-activado')){
-      crearCartelera();
-    } });
-
-    let peliculaBuscada = "";
-    let input = document.getElementById('buscador');
-    input.addEventListener('input',()=> {
-      eliminarError('busqueda');
-      peliculaBuscada = input.value;
-      peliculaBuscada = peliculaBuscada.toUpperCase();
-    });
-   
-    
-    let botonBuscar = document.getElementById("btn-buscar");
-    botonBuscar.addEventListener('click',()=>{
-      let contenedor = document.getElementById('peliculas-contenedor');
-      contenedor.innerHTML="";
-      
-      eliminarError('busqueda');
-      buscarPelicula(peliculaBuscada);
-      //traigo los botones de comprar de las peliculas
-      traerBtn(); 
-      ;})
-
-    let btnSubtitulo = document.getElementById('btn-subtitulo');
-    btnSubtitulo.addEventListener('click', ()=>{
-      //filtro las peliculas que esten en esta categoria
-    filtrarIdioma("btn-subtitulo","INGLÉS-SUBTITULADO");
-    //en el caso que halla un cartel de error generado por otra funcion elimino este cartel
-    eliminarError('busqueda');
-    // elimino del DOM todas las peliculas de la cartelera
-    eliminarPeliculasCartelera();
-    if(!btnSubtitulo.classList.contains('btn-activado')){
-      // si el boton 2D no está activado, entonces pongo la cartelera completa
-      crearCartelera();
-    }});
-
-    let btnSubtituloLatino = document.getElementById('btn-espaniol');
-    btnSubtituloLatino.addEventListener('click', ()=>{
-      //filtro las peliculas que esten en esta categoria
-    filtrarIdioma("btn-espaniol","LATINO");
-    //en el caso que halla un cartel de error generado por otra funcion elimino este cartel
-    eliminarError('busqueda');
-    // elimino del DOM todas las peliculas de la cartelera
-    eliminarPeliculasCartelera();
-    if(!btnSubtituloLatino.classList.contains('btn-activado')){
-      // si el boton 2D no está activado, entonces pongo la cartelera completa
-      crearCartelera();
-    }});
-
-
-    let btnReset = document.getElementById('btn-reset');
-    btnReset.addEventListener('click', ()=>{
-      let contenedor = document.getElementById('peliculas-contenedor');
-      eliminarError('busqueda');
-      contenedor.innerHTML = "";
-      crearCartelera()} );
-
-// ------------------------------------carrito de compras------------------------------------
-
-let btnCarrito = document.getElementById('icono-carrito');
-btnCarrito.addEventListener('click',()=>{ 
-  btnCarrito.classList.add('activo');
-  mostrarCarrito()});
-
-let btnSalir = document.getElementById('btn-salir-carrito');
-btnSalir.addEventListener('click',()=>{
-let contenedor = document.getElementById('contenedor-carrito');
-contenedor.classList.remove('activo');
-})
-
-
-let btnVaciar = document.getElementById('btn-vaciar');
-btnVaciar.addEventListener('click',()=>{
-  let confirmar = confirm('¿Seguro desea vaciar el carrito?');
-  if(confirmar){
-    carrito=[];
-    mostrarCarrito();
-  }
-});
-
-let btnConfirmar = document.getElementById('btn-confirmar-compra');
-btnConfirmar.addEventListener('click',()=>{
-
-  
-  let confirmar = confirm('¿Desea confirmar la compra?');
- mostrarCarrito();
-  if(confirmar){
-    alert('Compra realiza con exito');
-    carrito = [];
-    mostrarCarrito();
-  }
-});
-
-
-//-------------------------------------Funciones----------------------------------------------
-
-function crearCartelera(){
-
-  
-  let contenedorPeliculas = document.getElementById("peliculas-contenedor");
-
-  if(contenedorPeliculas.innerText ===""){
-    for (const elem of peliculasEnCartelera) {
-  
-      let div = document.createElement('div');
-        div.className = `pelicula`;
-      
-        div.innerHTML = ` 
-        <div class="imagen">
-          <picture>
-            <img
-              loading="lazy"
-              src=${elem.imagen}
-              alt="${elem.nombrePelicula}"
-              title="${elem.nombrePelicula}"
-            />
-          </picture>
-        </div>
-
-        <div class="logoFormato ">
-          <picture>
-            <img
-              loading="lazy"
-              src="./img/${elem.formato}.png"
-              alt="${elem.formato} logo"
-              title="${elem.formato} logo"
-            />
-          </picture>
-        </div>
-
-        <!--fin imagen-->
-      
-        <div class="info">
-          <div class="par">
-            <span>${elem.nombrePelicula}</span>
-          </div>
-          <input class="btn btn-comprar" id="${elem.id}" type="button" value="COMPRAR" />
-        </div>
-        <!--fin info-->
-        `;
-      
-      contenedorPeliculas.append(div);
-  }
-  }
-  //traigo los botones de comprar de las peliculas
-  traerBtn(); 
-}// crearCartelera
-
-function filtrarPeli(boton,formatoPeli) {
-
-  let contenedor = document.getElementById("peliculas-contenedor");
-  let btn = document.getElementById(boton);
-  if(btn.classList.contains('btn-activado')){
-    eliminar(formatoPeli);
-    
-  }else{
-
-
-   let resultados = peliculasEnCartelera.filter((el) => el.formato === formatoPeli );
-
-
-    for (const elem of resultados) {
-      let div = document.createElement('DIV');
-      div.className = `pelicula formato-${formatoPeli}`;
-
-      div.innerHTML = `
-       
-      <div class="imagen" >
-        <picture>
-          <img
-            loading="lazy"
-            src=${elem.imagen}
-            alt="${elem.nombrePelicula}"
-            title="${elem.nombrePelicula}"
-          />
-        </picture>
-      </div>
-
-      <div class="logoFormato ">
-      <picture>
-        <img
-          loading="lazy"
-          src="./img/${elem.formato}.png"
-          alt="${elem.formato} logo"
-          title="${elem.formato} logo"
-        />
-      </picture>
-    </div>
-
-      
-      <!--fin imagen-->
-    
-      <div class="info">
-        <div class="par">
-          <span>${elem.nombrePelicula}</span>
-        </div>
-        <input class="btn btn-comprar" id="${elem.id}" type="button" value="COMPRAR" />
-      </div>
-      <!--fin info-->
-      `;
-  
-      contenedor.appendChild(div);
+      crearCartelera(peliculasEnCartelera);
     }
-    // btn.classList.toggle('btn-activado');
-    
-  }
-
-  btn.classList.toggle('btn-activado');
-  
-}
-
-function eliminar(formato){
-let contenedor = document.querySelectorAll(`.formato-${formato}`);
-for (const i of contenedor) {
-  i.remove();
-  
-}
-}//eliminar
-
-function eliminarPeliculasCartelera() {
-  let peliculasContenedor = document.querySelectorAll(".pelicula");
-
-  for (const elem of peliculasContenedor) {
-    if(elem.classList.length==1){
-      elem.remove();
-    }
-  }
-
-}
-
-function buscarPelicula(pelicula) {
-  
-  let resultado = peliculasEnCartelera.filter((elem)=> elem.nombrePelicula === pelicula );
-  if(resultado.length ==0){
-    eliminarPeliculasCartelera();
-    let contenedor = document.getElementById("main");
-      let div = document.createElement('DIV');
-      div.className = "busqueda";
-      div.innerHTML = `<p> LO SENTIMOS, NO ENCONTRAMOS LA PELÍCULA INGRESADA =( </p>`;
-
-    contenedor.appendChild(div);
-  }else{
-    eliminarPeliculasCartelera();
-    mostrarPelicula(resultado);
-  }
-  
-}//buscarPelicula
-
-function mostrarPelicula(objetoPelicula){
-
-  
-  let contenedor = document.getElementById("peliculas-contenedor");
-      let div = document.createElement('DIV');
-      div.className = `pelicula formato-${objetoPelicula[0].formato}`;
-
-      div.innerHTML = `
-      <div class="imagen" >
-
-        <picture>
-          <img
-            loading="lazy"
-            src=${objetoPelicula[0].imagen}
-            alt="${objetoPelicula[0].nombrePelicula}"
-            title="${objetoPelicula[0].nombrePelicula}"
-          />
-        </picture>
-      </div>
-
-      <div class="logoFormato ">
-      <picture>
-        <img
-          loading="lazy"
-          src="./img/${objetoPelicula[0].formato}.png"
-          alt="${objetoPelicula[0].formato} logo"
-          title="${objetoPelicula[0].formato} logo"
-        />
-      </picture>
-    </div>
-      <!--fin imagen-->
-    
-      <div class="info">
-        <div class="par">
-          <span>${objetoPelicula[0].nombrePelicula}</span>
-        </div>
-        <input class="btn btn-comprar" id="${objetoPelicula[0].id}" type="button" value="COMPRAR" />
-      </div>
-      <!--fin info-->
-      `; 
-      contenedor.appendChild(div);
-
-  }//mostrarPelicula
-
-
-function eliminarError(clase){
-
-  let elemento = document.querySelector(`.${clase}`);
-  if(elemento != null){
-      elemento.remove();
-  }
-  
-}//eliminarError
-
-
-function filtrarIdioma(boton,formatoPeli) {
-
-  let contenedor = document.getElementById("peliculas-contenedor");
-  let btn = document.getElementById(boton);
-  if(btn.classList.contains('btn-activado')){
-    eliminar(formatoPeli);
-    
-  }else{
-    let resultados = peliculasEnCartelera.filter((el) => el.idioma === formatoPeli );
-
-    for (const elem of resultados) {
-      let div = document.createElement('DIV');
-      div.className = `pelicula formato-${formatoPeli}`;
-
-      div.innerHTML = `
-       
-      <div class="imagen" >
-        <picture>
-          <img
-            loading="lazy"
-            src=${elem.imagen}
-            alt="${elem.nombrePelicula}"
-            title="${elem.nombrePelicula}"
-          />
-        </picture>
-      </div>
-
-      <div class="logoFormato ">
-      <picture>
-        <img
-          loading="lazy"
-          src="./img/${elem.formato}.png"
-          alt="${elem.formato} logo"
-          title="${elem.formato} logo"
-        />
-      </picture>
-    </div>
-
-      
-      <!--fin imagen-->
-    
-      <div class="info">
-        <div class="par">
-          <span>${elem.nombrePelicula}</span>
-        </div>
-        <input class="btn btn-comprar" id="${elem.id}" type="button" value="COMPRAR" />
-      </div>
-      <!--fin info-->
-      `;
-  
-      contenedor.appendChild(div);
-    }
-    // btn.classList.toggle('btn-activado');
-    
-  }
-  //traigo los botones de comprar de las peliculas
-  traerBtn(); 
-
-  btn.classList.toggle('btn-activado');
-  
-}
-
-function traerBtn() {
-  let btnComprar = document.querySelectorAll('.btn-comprar');
-  btnComprar.forEach(element => {
-    element.addEventListener('click', ()=>{
-    agregarAlCarrito(element.id)})
-
-    }); 
-}
-
-function agregarAlCarrito(id){
-  let objeto = peliculasEnCartelera.filter((e)=> e.id == id);
- 
-  let confirmar = confirm(`¿Desea agregar ${objeto[0].nombrePelicula} en ${objeto[0].formato} al carrito?`);
-
-  if(confirmar){
-    
-    let cantidad = parseInt(prompt(`¿Cuántos tickets deseas?`));
-    while(isNaN(cantidad)){
-      cantidad = parseInt(prompt(`¿Cuántos tickets deseas?`));
-    }
-
-    let pedido = new Carrito(cantidad,objeto[0].precio,objeto[0].nombrePelicula,objeto[0].formato);
-    carrito.push(pedido);
-
-    actualizaCantidad();
-    
-  }
-
-}
-
-function actualizaCantidad() {
-  let cantidadCarrito = document.getElementById('parrafo-carrito');
-    cantidadCarrito.innerText = `(${carrito.length})`;
-}
-
-
-function mostrarCarrito() {
- //elimino filas en el caso que halla, deben tener la class fila
-  let resetTabla = document.querySelectorAll('.filas');
-  resetTabla.forEach(element => {
-    element.remove();
   });
-  
-  let mensajeError =document.getElementById('mensajeError');
-  mensajeError.innerHTML = "";
-  
-  if(carrito.length == 0 ){
 
-    let parrafo = document.createElement('P');
-    parrafo.classList.add('mensaje-carrito');
-    parrafo.innerText = "¡Su carrito se encuentra vacío!";
-    mensajeError.appendChild(parrafo);
 
-  }else{
-
-    
-    //renderizo cada elemento que tengo en el carrito  
-      for (const elem of carrito) {
-        let tabla = document.getElementById("tabla");
-        let contenedorTR = document.createElement("tr");
-        let subtotal = elem.subtotal();
-        contenedorTR.classList.add('filas')
-        contenedorTR.innerHTML = `
-                                    <td>${elem.nombrePelicula}</td>
-                                    <td>${elem.formato}</td>
-                                    <td>$ ${elem.precio}</td>
-                                    <td>X</td>
-                                    <td>${elem.cantidadTicket}</td>
-                                    <td>$ ${subtotal}</td>
-                                  `;
-        
-        tabla.appendChild(contenedorTR);
-      }
-      
-      total = carrito.reduce((acum, elem) => acum + elem.precio * elem.cantidadTicket,0);
-    
-      let tabla = document.getElementById("tabla");
-      let tr1 = document.createElement("tr");
-      tr1.classList = "resultado filas";
-      tr1.innerHTML = `
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td class="total">TOTAL</td>
-      <td class="total">$ ${total}</td>
-    
-    `;
-    
-      tabla.append(tr1);
-    
-      
+  //----------------------funciones para el boton 3D-------------------
+  let filtro3D = document.getElementById("btn-3D");
+  filtro3D.addEventListener("click", () => {
+    filtrarPeli("btn-3D", "3D",peliculasEnCartelera);
+    eliminarError("busqueda");
+    traerBtn();
+    eliminarPeliculasCartelera();
+    if (!filtro3D.classList.contains("btn-activado")) {
+      crearCartelera(peliculasEnCartelera);
     }
+  });
+
+
+  //----------------------funciones para el boton 4D-------------------
+  let filtro4D = document.getElementById("btn-4D");
+  filtro4D.addEventListener("click", () => {
+    filtrarPeli("btn-4D", "4D",peliculasEnCartelera);
+    eliminarError("busqueda");
+    //traigo los botones de comprar de las peliculas
+    traerBtn();
+    eliminarPeliculasCartelera();
+    if (!filtro4D.classList.contains("btn-activado")) {
+      crearCartelera(peliculasEnCartelera);
+    }
+  });
+
+
+  //----------------------funciones para el boton 5D-------------------
+  let filtro5D = document.getElementById("btn-5D");
+  filtro5D.addEventListener("click", () => {
+    filtrarPeli("btn-5D", "5D",peliculasEnCartelera);
+    //si hay carteles de errores los elimino
+    eliminarError("busqueda");
+    //traigo los botones de comprar de las peliculas
+    traerBtn();
+    eliminarPeliculasCartelera();
+    if (!filtro5D.classList.contains("btn-activado")) {
+      crearCartelera(peliculasEnCartelera);
+    }
+  });
+
+
+  //----------------------funciones para el input buscar-------------------
+  let peliculaBuscada = "";
+  let input = document.getElementById("buscador");
+  input.addEventListener("input", () => {
+    eliminarError("busqueda");
+    peliculaBuscada = input.value;
+    peliculaBuscada = peliculaBuscada.toUpperCase();
+  });
+
+
+  //----------------------funciones para el boton buscar-------------------
+  let botonBuscar = document.getElementById("btn-buscar");
+  botonBuscar.addEventListener("click", () => {
+    let contenedor = document.getElementById("peliculas-contenedor");
+    contenedor.innerHTML = "";
+    eliminarError("busqueda");
+    buscarPelicula(peliculaBuscada,peliculasEnCartelera);
+    //traigo los botones de comprar de las peliculas
+    traerBtn();
+  });
+
+
+  //----------------------funciones para el boton subtitulo-------------------
+  let btnSubtitulo = document.getElementById("btn-subtitulo");
+  btnSubtitulo.addEventListener("click", () => {
+    //filtro las peliculas que esten en esta categoria
+    filtrarIdioma("btn-subtitulo", "INGLÉS-SUBTITULADO",peliculasEnCartelera);
+    //en el caso que halla un cartel de error generado por otra funcion elimino este cartel
+    eliminarError("busqueda");
+    // elimino del DOM todas las peliculas de la cartelera
+    eliminarPeliculasCartelera();
+    if (!btnSubtitulo.classList.contains("btn-activado")) {
+      // si el boton 2D no está activado, entonces pongo la cartelera completa
+      crearCartelera(peliculasEnCartelera);
+    }
+  });
+
+
+  //----------------------funciones para el boton español-------------------
+  let btnSubtituloLatino = document.getElementById("btn-espaniol");
+  btnSubtituloLatino.addEventListener("click", () => {
+    //filtro las peliculas que esten en esta categoria
+    filtrarIdioma("btn-espaniol", "LATINO",peliculasEnCartelera);
+    //en el caso que halla un cartel de error generado por otra funcion elimino este cartel
+    eliminarError("busqueda");
+    // elimino del DOM todas las peliculas de la cartelera
+    eliminarPeliculasCartelera();
+    if (!btnSubtituloLatino.classList.contains("btn-activado")) {
+      // si el boton 2D no está activado, entonces pongo la cartelera completa
+      crearCartelera(peliculasEnCartelera);
+    }
+  });
+
+
+  //----------------------funciones para el boton reset-------------------
+  let btnReset = document.getElementById("btn-reset");
+  btnReset.addEventListener("click", () => {
+    let contenedor = document.getElementById("peliculas-contenedor");
+    eliminarError("busqueda");
+    contenedor.innerHTML = "";
+    crearCartelera(peliculasEnCartelera);
+  });
+
+  // ------------------------------------carrito de compras------------------------------------
+
+  let btnCarrito = document.getElementById("icono-carrito");
+  btnCarrito.addEventListener("click", () => {
+    btnCarrito.classList.add("activo");
+
+    const guardarLocal = (clave,valor)=>{localStorage.setItem(clave,valor)};
     
-    let contenedor = document.getElementById('contenedor-carrito');
-    contenedor.classList.add("activo");
+    //Cuando el usuario presiona el boton del carrito se verifica que tenga productos en el localStorage
+   let productos = JSON.parse(localStorage.getItem('productos'));
+    if(productos){
+      
+      if(carritoCompra.length == 0){
+        //si el carrito esta vacío cuando entran entonces agrego solo los productos del localStorage
+        for (const producto of productos) {
+          //los datos de cada producto lo tengo que instanciar en la clase carrito
+
+          let pedido = new Carrito(producto.id,
+            producto.cantidad,
+            producto.precio,
+            producto.nombrePelicula,
+            producto.formato
+          );
+          carritoCompra.push(pedido);
+          actualizaCantidad();
+
+        }
+      }
+
+
+
+    }else{
+      productos = localStorage.setItem("carrito",JSON.stringify(carritoCompra));
+    }
+
+
+
+
+
+    //el boton del carrito activa la venta del carrito
+    mostrarCarrito(carritoCompra);
+    escuchaBtnEliminar();
     
-    
+  });
+
+
+//con este bloque salgo del carrito de compras
+  let btnSalir = document.getElementById("btn-salir-carrito");
+  btnSalir.addEventListener("click", () => {
+    let contenedor = document.getElementById("contenedor-carrito");
+    // desactiva la ventana del carrito
+    contenedor.classList.remove("activo");
+  });
+
+  //vaciar carrito
+  let btnVaciar = document.getElementById("btn-vaciar");
+  btnVaciar.addEventListener("click", () => {
+    //pregunto al usuario si quiere vaciar el carrito
+    let confirmar = confirm("¿Seguro desea vaciar el carrito?");
+    //si confirma entonces se borra el carrito y se muestra en pantalla el carrito vacio
+    if (confirmar) {
+      carritoCompra = [];
+      mostrarCarrito(carritoCompra);
+      //se actualiza el valor del carrito en la pantalla principal
+      actualizaCantidad(carritoCompra);
+    }
+  });
+
+
+// confirmar comprar del carrito
+  let btnConfirmar = document.getElementById("btn-confirmar-compra");
+  btnConfirmar.addEventListener("click", () => {
+    let confirmar = confirm("¿Desea confirmar la compra?");
+    mostrarCarrito(carritoCompra);
+    if (confirmar) {
+      alert("Su compra se realizó con exito");
+      carritoCompra = [];
+      mostrarCarrito(carritoCompra);
+      //se actualiza el valor del carrito en la pantalla principal
+      actualizaCantidad(carritoCompra);
+    }
+  });
+
+ 
+  
+  
 
 
 
+  
+}; //onload
 
 
-}
-
-//verifica si el pedido de la pelicula ya se encuentra en el carrito
-function verifica(params) {
-  return;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-}//onload
+//configurar los botones del carrito de comprar para aumentar y disminuir la cantidad de ticket
+//configurar para q no se pueda repetir el producto en el carrito
+//agregar el carrito de comprar al localstorage
