@@ -85,7 +85,7 @@ export function agregarAlCarrito(id) {
                                   </div></td>
                                     <td>$ ${elem.precio}</td>
                                     <td>X</td>
-                                    <td><button id="btn-${elem.id}-bajar"><</button> ${elem.cantidadTicket} <button id="btn-${elem.id}-subir">></button></td>
+                                    <td><button class="bajar" id="btn-${elem.id}-bajar">-</button> ${elem.cantidadTicket} <button class="subir" id="btn-${elem.id}-subir">+</button></td>
                                     <td>$ ${subtotal}</td>
                                     <td><button class="btn btn-eliminar" id="e-${elem.id}">Eliminar</button></td>
                                   `;
@@ -181,7 +181,6 @@ export function revisaLocalStorage() {
   }
 }
 
-
 export function actualizarLocalStorage() {
     //borro el localStorage para luego actualizar con el producto nuevo
     localStorage.removeItem('carrito');
@@ -194,3 +193,58 @@ export function actualizarLocalStorage() {
 
 
 }
+
+// function aumentaTicket(id) {
+// }
+
+export function controladorTicket() {
+
+  let btnsSubir = document.querySelectorAll('.subir');
+  let btnsBajar = document.querySelectorAll('.bajar');
+
+  btnsSubir.forEach((e)=>{
+    e.addEventListener('click',()=>{
+      
+      for (const elem of carritoCompra) {
+        if(e.id == "btn-"+elem.id+"-subir"){
+          //aumento la cantidad de ticket en uno
+          elem.cantidadTicket++;
+          //actualizo el carrito
+          mostrarCarrito(carritoCompra);
+          //vuelvo a poner disponible los botones del controlador de ticket
+          controladorTicket();
+          // pongo disponible los botones eliminar del carrito
+          escuchaBtnEliminar();
+          //actualizo el localStorage
+          actualizarLocalStorage();
+        }
+      }
+    })
+   })
+
+   btnsBajar.forEach((e)=>{
+    e.addEventListener('click',()=>{
+      
+      for (const elem of carritoCompra) {
+        if(e.id == "btn-"+elem.id+"-bajar"){
+
+          if(elem.cantidadTicket>1){
+
+            //aumento la cantidad de ticket en uno
+            elem.cantidadTicket--;
+            //actualizo el carrito
+            mostrarCarrito(carritoCompra);
+            //vuelvo a poner disponible los botones del controlador de ticket
+            controladorTicket();
+            // pongo disponible los botones eliminar del carrito
+            escuchaBtnEliminar();
+            //actualizo el localStorage
+            actualizarLocalStorage();
+          }
+        }
+      }
+    })
+   })
+
+  
+ }

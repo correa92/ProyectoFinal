@@ -8,7 +8,7 @@ import {crearCartelera,
   main
 } from "./Cartelera.js";
 import {Pelicula} from "./Pelicula.js";
-import {mostrarCarrito, actualizaCantidad, escuchaBtnEliminar, revisaLocalStorage, actualizarLocalStorage} from "./Carrito.js";
+import {mostrarCarrito, actualizaCantidad, escuchaBtnEliminar, revisaLocalStorage, actualizarLocalStorage, controladorTicket} from "./Carrito.js";
 import { pedirUsuario } from "./Cliente.js";
 
 //-------------------------------variables---------------------------------
@@ -177,10 +177,9 @@ document.body.onload = function () {
   btnCarrito.addEventListener("click", () => {
     btnCarrito.classList.add("activo");
 
-    
-    
     //el boton del carrito activa la venta del carrito
     mostrarCarrito(carritoCompra);
+    controladorTicket();
     escuchaBtnEliminar();
     
   });
@@ -225,11 +224,6 @@ document.body.onload = function () {
     }
   });
 
- 
-  
-  
-
-
 
   
 }; //onload
@@ -237,4 +231,4 @@ document.body.onload = function () {
 
 //configurar los botones del carrito de comprar para aumentar y disminuir la cantidad de ticket
 //configurar para q no se pueda repetir el producto en el carrito
-//agregar el carrito de comprar al localstorage
+
