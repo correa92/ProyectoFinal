@@ -1,7 +1,7 @@
 
 //-------------------------------------Funciones----------------------------------------------
 
-import { agregarAlCarrito } from "./Carrito.js";
+import { agregarAlCarrito, actualizarLocalStorage} from "./Carrito.js";
 
 export function main() {
   let main = document.body;
@@ -331,7 +331,10 @@ export function traerBtn() {
   let btnComprar = document.querySelectorAll(".btn-comprar");
   btnComprar.forEach((element) => {
     element.addEventListener("click", () => {
+        //agrego al carrito de comprar el producto especificado
         agregarAlCarrito(element.id);
+        //actualizo el carrito en el localStorage
+        actualizarLocalStorage();
     });
   });
 }

@@ -2,7 +2,7 @@ import { peliculasEnCartelera, carritoCompra} from "./app.js";
 
 export let carrito=[];
 
-export class Carrito {
+export class Producto {
     constructor(id,cantidadTicket, precio, nombrePelicula, formato) {
       this.id = id;
       this.cantidadTicket = cantidadTicket;
@@ -14,7 +14,7 @@ export class Carrito {
     subtotal = () => this.precio * this.cantidadTicket;
 
 
-  }// class Carrito
+  }// class Producto
 
 export function agregarAlCarrito(id) {
     let objeto = peliculasEnCartelera.filter((e) => e.id == id);
@@ -29,7 +29,7 @@ export function agregarAlCarrito(id) {
         cantidad = parseInt(prompt(`¿Cuántos tickets deseas?`));
       }
 
-      let pedido = new Carrito(objeto[0].id,
+      let pedido = new Producto(objeto[0].id,
         cantidad,
         objeto[0].precio,
         objeto[0].nombrePelicula,
@@ -127,16 +127,20 @@ export function agregarAlCarrito(id) {
       index=i;
     }
   }
-
   let confirmar = confirm(
     `¿Desea eliminar ${carritoCompra[index].nombrePelicula} del carrito?`
   );
 
   if(confirmar){
-    
+    //elimino del carrito el producto especificado mediante su indice
     carritoCompra.splice(index,1);
+    //actualizo en el DOM la cantidad de productos que hay en el carrito
     actualizaCantidad();
+    //muestro el carrito actualizado en el DOM
     mostrarCarrito(carritoCompra);
+    //actualizo el carrito en el storage
+    actualizarLocalStorage();
+    // vuelvo a escuchar los botones de eliminar en el carrito
     escuchaBtnEliminar();
   }else{
     escuchaBtnEliminar();
@@ -156,10 +160,37 @@ export function agregarAlCarrito(id) {
   });
  }
 
-// function cargarLocalStorage() {
+export function revisaLocalStorage() {
+  //Cuando el usuario presiona el boton del carrito se verifica que tenga productos en el localStorage
+  let productos = JSON.parse(localStorage.getItem('carrito'));
+
+  if(productos){
+    
+    for (const producto of productos) {
+      //los datos de cada producto lo tengo que instanciar en la clase carrito
+
+      let pedido = new Producto(producto.id,
+        producto.cantidadTicket,
+        producto.precio,
+        producto.nombrePelicula,
+        producto.formato
+      );
+      carritoCompra.push(pedido);
+      actualizaCantidad();
+    }
+  }
+}
+
+
+export function actualizarLocalStorage() {
+    //borro el localStorage para luego actualizar con el producto nuevo
+    localStorage.removeItem('carrito');
+
+    if(carritoCompra.length != 0){
+      //agrego al storage el carrito actualizado
+      localStorage.setItem('carrito',JSON.stringify(carritoCompra));
   
-//   for
+    }
 
 
-
-// }//cargarLocalStorage
+}

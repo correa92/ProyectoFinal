@@ -8,7 +8,7 @@ import {crearCartelera,
   main
 } from "./Cartelera.js";
 import {Pelicula} from "./Pelicula.js";
-import {mostrarCarrito, actualizaCantidad, escuchaBtnEliminar} from "./Carrito.js";
+import {mostrarCarrito, actualizaCantidad, escuchaBtnEliminar, revisaLocalStorage, actualizarLocalStorage} from "./Carrito.js";
 import { pedirUsuario } from "./Cliente.js";
 
 //-------------------------------variables---------------------------------
@@ -39,6 +39,8 @@ document.body.onload = function () {
   //muestro el contenido principal
   main();
   pedirUsuario();
+  //revisa el localStorage que tenga productos y actualiza la cantidad de productos en la pantalla principal
+  revisaLocalStorage();
  //Muestro en la pantalla principal las peliculas disponibles
   crearCartelera(peliculasEnCartelera);
 
@@ -169,45 +171,14 @@ document.body.onload = function () {
     crearCartelera(peliculasEnCartelera);
   });
 
-  // ------------------------------------carrito de compras------------------------------------
+  // --------------------------------------------------------------------carrito de compras-----------------------------------------------------------
 
   let btnCarrito = document.getElementById("icono-carrito");
   btnCarrito.addEventListener("click", () => {
     btnCarrito.classList.add("activo");
 
-    const guardarLocal = (clave,valor)=>{localStorage.setItem(clave,valor)};
     
-    //Cuando el usuario presiona el boton del carrito se verifica que tenga productos en el localStorage
-   let productos = JSON.parse(localStorage.getItem('productos'));
-    if(productos){
-      
-      if(carritoCompra.length == 0){
-        //si el carrito esta vacío cuando entran entonces agrego solo los productos del localStorage
-        for (const producto of productos) {
-          //los datos de cada producto lo tengo que instanciar en la clase carrito
-
-          let pedido = new Carrito(producto.id,
-            producto.cantidad,
-            producto.precio,
-            producto.nombrePelicula,
-            producto.formato
-          );
-          carritoCompra.push(pedido);
-          actualizaCantidad();
-
-        }
-      }
-
-
-
-    }else{
-      productos = localStorage.setItem("carrito",JSON.stringify(carritoCompra));
-    }
-
-
-
-
-
+    
     //el boton del carrito activa la venta del carrito
     mostrarCarrito(carritoCompra);
     escuchaBtnEliminar();
@@ -231,6 +202,7 @@ document.body.onload = function () {
     //si confirma entonces se borra el carrito y se muestra en pantalla el carrito vacio
     if (confirmar) {
       carritoCompra = [];
+      localStorage.removeItem('carrito');
       mostrarCarrito(carritoCompra);
       //se actualiza el valor del carrito en la pantalla principal
       actualizaCantidad(carritoCompra);
@@ -246,6 +218,7 @@ document.body.onload = function () {
     if (confirmar) {
       alert("Su compra se realizó con exito");
       carritoCompra = [];
+      localStorage.removeItem('carrito');
       mostrarCarrito(carritoCompra);
       //se actualiza el valor del carrito en la pantalla principal
       actualizaCantidad(carritoCompra);
