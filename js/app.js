@@ -216,6 +216,3 @@ document.body.onload = function () {
 }; //onload
 
 
-//configurar los botones del carrito de comprar para aumentar y disminuir la cantidad de ticket
-//configurar para q no se pueda repetir el producto en el carrito
-

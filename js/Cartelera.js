@@ -81,7 +81,6 @@ export function main() {
 `;
 }
 
-
 export function crearCartelera(arreglo) {
   let contenedorPeliculas = document.getElementById("peliculas-contenedor");
 
@@ -197,11 +196,8 @@ export function eliminar(formato) {
 
 export function eliminarPeliculasCartelera() {
   let peliculasContenedor = document.querySelectorAll(".pelicula");
-
   for (const elem of peliculasContenedor) {
-    if (elem.classList.length == 1) {
-      elem.remove();
-    }
+    (elem.classList.length == 1) && elem.remove();
   }
 }
 
@@ -264,9 +260,7 @@ export function mostrarPelicula(objetoPelicula) {
 
 export function eliminarError(clase) {
   let elemento = document.querySelector(`.${clase}`);
-  if (elemento != null) {
-    elemento.remove();
-  }
+  (elemento != null) && elemento.remove();
 } //eliminarError
 
 export function filtrarIdioma(boton, formatoPeli, arreglo) {
