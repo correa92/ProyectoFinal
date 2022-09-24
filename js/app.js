@@ -58,11 +58,10 @@ document.body.onload = function () {
     eliminarError("busqueda");
     //traigo los botones de comprar de las peliculas y si selecciono un boton ejecuto la funcion agregarAlCarrito (que esta dentro de traerBtn)
     traerBtn();
+      
+    // si el boton 2D no está activado, entonces pongo la cartelera completa
+    (!filtro2D.classList.contains("btn-activado")) && crearCartelera(peliculasEnCartelera);
 
-    if (!filtro2D.classList.contains("btn-activado")) {
-      // si el boton 2D no está activado, entonces pongo la cartelera completa
-      crearCartelera(peliculasEnCartelera);
-    }
   });
 
 
@@ -73,9 +72,7 @@ document.body.onload = function () {
     eliminarError("busqueda");
     traerBtn();
     eliminarPeliculasCartelera();
-    if (!filtro3D.classList.contains("btn-activado")) {
-      crearCartelera(peliculasEnCartelera);
-    }
+    (!filtro3D.classList.contains("btn-activado")) && crearCartelera(peliculasEnCartelera);
   });
 
 
@@ -87,9 +84,7 @@ document.body.onload = function () {
     //traigo los botones de comprar de las peliculas
     traerBtn();
     eliminarPeliculasCartelera();
-    if (!filtro4D.classList.contains("btn-activado")) {
-      crearCartelera(peliculasEnCartelera);
-    }
+    (!filtro4D.classList.contains("btn-activado")) && crearCartelera(peliculasEnCartelera);
   });
 
 
@@ -102,9 +97,7 @@ document.body.onload = function () {
     //traigo los botones de comprar de las peliculas
     traerBtn();
     eliminarPeliculasCartelera();
-    if (!filtro5D.classList.contains("btn-activado")) {
-      crearCartelera(peliculasEnCartelera);
-    }
+    (!filtro5D.classList.contains("btn-activado")) && crearCartelera(peliculasEnCartelera);
   });
 
 
@@ -139,10 +132,7 @@ document.body.onload = function () {
     eliminarError("busqueda");
     // elimino del DOM todas las peliculas de la cartelera
     eliminarPeliculasCartelera();
-    if (!btnSubtitulo.classList.contains("btn-activado")) {
-      // si el boton 2D no está activado, entonces pongo la cartelera completa
-      crearCartelera(peliculasEnCartelera);
-    }
+    (!btnSubtitulo.classList.contains("btn-activado")) &&  crearCartelera(peliculasEnCartelera);
   });
 
 
@@ -155,10 +145,7 @@ document.body.onload = function () {
     eliminarError("busqueda");
     // elimino del DOM todas las peliculas de la cartelera
     eliminarPeliculasCartelera();
-    if (!btnSubtituloLatino.classList.contains("btn-activado")) {
-      // si el boton 2D no está activado, entonces pongo la cartelera completa
-      crearCartelera(peliculasEnCartelera);
-    }
+    (!btnSubtituloLatino.classList.contains("btn-activado")) && crearCartelera(peliculasEnCartelera);
   });
 
 
@@ -214,8 +201,8 @@ document.body.onload = function () {
 // confirmar comprar del carrito
   let btnConfirmar = document.getElementById("btn-confirmar-compra");
   btnConfirmar.addEventListener("click", () => {
-    let confirmar = confirm("¿Desea confirmar la compra?");
     mostrarCarrito(carritoCompra);
+    let confirmar = confirm("¿Desea confirmar la compra?");
     if (confirmar) {
       alert("Su compra se realizó con exito");
       carritoCompra = [];
@@ -230,7 +217,4 @@ document.body.onload = function () {
   
 }; //onload
 
-
-//configurar los botones del carrito de comprar para aumentar y disminuir la cantidad de ticket
-//configurar para q no se pueda repetir el producto en el carrito
 

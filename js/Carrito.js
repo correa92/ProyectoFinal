@@ -94,9 +94,7 @@ export function agregarAlCarrito(id) {
       }
  
      let total = carritoDeCompra.reduce(
-        (acum, elem) => acum + elem.precio * elem.cantidadTicket,
-        0
-      );
+        (acum, elem) => acum + elem.precio * elem.cantidadTicket,0);
 
       let tabla = document.getElementById("tabla");
       let tr1 = document.createElement("tr");
@@ -185,13 +183,8 @@ export function actualizarLocalStorage() {
     //borro el localStorage para luego actualizar con el producto nuevo
     localStorage.removeItem('carrito');
 
-    if(carritoCompra.length != 0){
-      //agrego al storage el carrito actualizado
-      localStorage.setItem('carrito',JSON.stringify(carritoCompra));
-  
-    }
-
-
+    (carritoCompra.length != 0) && localStorage.setItem('carrito',JSON.stringify(carritoCompra));
+    //agrego al storage el carrito actualizado
 }
 
 // function aumentaTicket(id) {
