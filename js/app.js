@@ -185,16 +185,36 @@ document.body.onload = function () {
   //vaciar carrito
   let btnVaciar = document.getElementById("btn-vaciar");
   btnVaciar.addEventListener("click", () => {
-    //pregunto al usuario si quiere vaciar el carrito
-    let confirmar = confirm("¿Seguro desea vaciar el carrito?");
-    //si confirma entonces se borra el carrito y se muestra en pantalla el carrito vacio
-    if (confirmar) {
-      carritoCompra = [];
-      localStorage.removeItem('carrito');
-      mostrarCarrito(carritoCompra);
-      //se actualiza el valor del carrito en la pantalla principal
-      actualizaCantidad(carritoCompra);
-    }
+
+    Swal.fire({
+      title: `¿Vaciar Carrito?`,
+      text: "Se eliminaran las películas del carrito",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "No vaciar",
+      confirmButtonText: "Sí, vaciar!"
+  
+    }).then((result) => {
+  
+      if (result.isConfirmed) {
+        carritoCompra = [];
+        localStorage.removeItem('carrito');
+        mostrarCarrito(carritoCompra);
+        //se actualiza el valor del carrito en la pantalla principal
+        actualizaCantidad(carritoCompra);
+  
+        Swal.fire({
+          title: "Eliminado!",
+          text: "El carrito se vació correctamente.",
+          icon: "success",
+          timer: 3500,
+          showConfirmButton: false
+        }
+        );
+      }
+    });
   });
 
 
@@ -202,17 +222,45 @@ document.body.onload = function () {
   let btnConfirmar = document.getElementById("btn-confirmar-compra");
   btnConfirmar.addEventListener("click", () => {
     mostrarCarrito(carritoCompra);
-    let confirmar = confirm("¿Desea confirmar la compra?");
-    if (confirmar) {
-      alert("Su compra se realizó con exito");
-      carritoCompra = [];
-      localStorage.removeItem('carrito');
-      mostrarCarrito(carritoCompra);
-      //se actualiza el valor del carrito en la pantalla principal
-      actualizaCantidad(carritoCompra);
-    }
+
+    
+    Swal.fire({
+      title: `¿Confirmar Compra?`,
+      text: "Se confirmará la compra de los productos del carrito.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "No comprar",
+      confirmButtonText: "Sí, comprar!"
+  
+    }).then((result) => {
+  
+      if (result.isConfirmed) {
+        carritoCompra = [];
+        localStorage.removeItem('carrito');
+        mostrarCarrito(carritoCompra);
+        //se actualiza el valor del carrito en la pantalla principal
+        actualizaCantidad(carritoCompra);
+  
+        Swal.fire({
+          title: "Felicitaciones!",
+          text: "La compra se realizó correctamente.",
+          icon: "success",
+          timer: 3500,
+          showConfirmButton: false
+        }
+        );
+      }
+    });
   });
 
+
+
+
+
+
+  
 
   
 }; //onload
