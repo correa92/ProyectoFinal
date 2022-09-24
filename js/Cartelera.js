@@ -89,11 +89,12 @@ export function crearCartelera(arreglo) {
     for (const elem of arreglo) {
       let div = document.createElement("div");
       div.className = `pelicula`;
-
+      
       div.innerHTML = ` 
-            <div class="imagen">
+            <div class="imagen  ">
               <picture>
                 <img
+                
                   loading="lazy"
                   src=${elem.imagen}
                   alt="${elem.nombrePelicula}"

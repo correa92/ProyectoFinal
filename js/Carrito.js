@@ -230,7 +230,7 @@ export function controladorTicket() {
 
           if(elem.cantidadTicket>1){
 
-            //aumento la cantidad de ticket en uno
+            //disminuye la cantidad de ticket en uno
             elem.cantidadTicket--;
             //actualizo el carrito
             mostrarCarrito(carritoCompra);

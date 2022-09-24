@@ -177,9 +177,11 @@ document.body.onload = function () {
   btnCarrito.addEventListener("click", () => {
     btnCarrito.classList.add("activo");
 
-    //el boton del carrito activa la venta del carrito
+    //el boton del carrito activa la ventana del carrito
     mostrarCarrito(carritoCompra);
+    //se habilita el controlador
     controladorTicket();
+    //se habilita los botones de eliminar
     escuchaBtnEliminar();
     
   });
