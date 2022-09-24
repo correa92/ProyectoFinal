@@ -198,7 +198,7 @@ document.body.onload = function () {
   });
 
 
-// confirmar comprar del carrito
+// confirmar compra del carrito
   let btnConfirmar = document.getElementById("btn-confirmar-compra");
   btnConfirmar.addEventListener("click", () => {
     mostrarCarrito(carritoCompra);
