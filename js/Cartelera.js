@@ -78,8 +78,30 @@ export function main() {
     <button class="btn" id="btn-salir-carrito">Salir del carrito</button>
   </div>
 </div>
+
+<footer id="pie" class="footer">
+
+<div class="contenedor-footer">
+  <div class="titulo-footer">
+    <h3>Contacto</h3>
+  </div>
+  <div class="contenedor-social">
+    <a href="https://www.linkedin.com/in/correa-alejandro-ezequiel-dev92/"><i class="fa-brands fa-linkedin fa-fade"></i>Correa Alejandro E.</a>
+    <a href=" https://wa.me/1131397348" target="_blank"><i class="fa-brands fa-whatsapp fa-fade"></i>11-31397348</a>
+    <a href="https://github.com/correa92"><i class="fa-brands fa-fade fa-github"></i>correa92</a>
+    <a href=""><i class="fa-regular fa-envelope fa-fade"></i>correa92.dev@gmail.com</a>
+
+    <div class="derechos">
+      <p>&#169 2022 ALL RIGHTS RESERVED. By Correa Alejandro</p>
+    </div>
+  </div>        
+</div> <!--contenedor-footer-->
+
+</footer>
 `;
 }
+
+
 
 export function crearCartelera(arreglo) {
   let contenedorPeliculas = document.getElementById("peliculas-contenedor");
