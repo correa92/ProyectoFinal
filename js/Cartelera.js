@@ -75,7 +75,7 @@ export function main() {
   <div class="botonesCarrito">
     <button class="btn" id="btn-confirmar-compra">Confirmar Compra</button>
     <button class="btn" id="btn-vaciar">Vaciar Carrito</button>
-    <button class="btn" id="btn-salir-carrito">Salir del carrito</button>
+    <button class="btn" id="btn-salir-carrito"><i class="fa-solid fa-circle-arrow-left"></i></button>
   </div>
 </div>
 

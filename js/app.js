@@ -160,7 +160,7 @@ document.body.onload = function () {
 
   // --------------------------------------------------------------------carrito de compras-----------------------------------------------------------
 
-  let btnCarrito = document.getElementById("icono-carrito");
+  let btnCarrito = document.getElementById("carrito");
   btnCarrito.addEventListener("click", () => {
     btnCarrito.classList.add("activo");
 
