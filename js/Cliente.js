@@ -38,12 +38,14 @@ export function pedirUsuario() {
       inputValidator: (value)=>{
         if (value) {
           usuario = value;
-          //agrego usuario al localStorage
-          localStorage.setItem("usuario", usuario);
-          //agrego usuario al DOM
-          let parrafo = document.getElementById("usuario-nombre");
-          parrafo.innerText = usuario;
+        }else{
+          usuario = "User";
         }
+        //agrego usuario al localStorage
+        localStorage.setItem("usuario", usuario);
+        //agrego usuario al DOM
+        let parrafo = document.getElementById("usuario-nombre");
+        parrafo.innerText = usuario;
       }
     })
 
