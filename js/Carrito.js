@@ -97,7 +97,7 @@ export function mostrarCarrito(carritoDeCompra) {
                                     <td>X</td>
                                     <td><button class="bajar" id="btn-${elem.id}-bajar">-</button> ${elem.cantidadTicket} <button class="subir" id="btn-${elem.id}-subir">+</button></td>
                                     <td>$ ${subtotal}</td>
-                                    <td><button class="btn btn-eliminar" id="e-${elem.id}">Eliminar</button></td>
+                                    <td><button class="btn btn-eliminar" id="e-${elem.id}"><i class="fa-solid fa-trash"></i></button></td>
                                   `;
       // en el boton de eliminar se coloca id = e-numero para diferenciar de los id creados en la funcion crearCartelera
       tabla.appendChild(contenedorTR);

@@ -49,6 +49,8 @@ html{
     border: none;
     color: var(--grisOscuro);
     box-shadow: 1px 1px 3px 0 #000;
+    justify-content: center;
+    padding: 5px;
     
     
 }
@@ -74,7 +76,6 @@ html{
 }
 
 .contenedor-principal{
-    
     background-image: url(../img/massive-horror-collage-wallpaper-horror-movies-game-wallpapers-1778622464.jpg);
     width: 100%;
     background-size: cover;
@@ -288,15 +289,54 @@ i{
     top: 0;
     right: 0;
     width: 100%;
+    overflow: auto;
     height: 100%;
+    padding-top: 20px;
 }
+fieldset{
+    text-align: center;
+    width: 100%;
+   
+}
+
+legend{
+    font-size: 25px;
+    font-weight: bold;
+}
+td{
+    padding-top: 10px;
+}
+
+.botonesCarrito{
+    display: flex;
+    justify-content: center;
+    position: fixed;
+
+}
+.botonesCarrito button{
+    
+    margin: 5px 10px 5px 10px;
+    background: var(--grisOscuro);
+    color: var(--silver);
+}
+.botonesCarrito button:hover{
+    background: var(--grisOscuro);
+    scale: 1.05;
+}
+
 
 @media (min-width: 768px) {
   .contenedor-carrito{
-
+    
     max-width: 990px;
     padding: 10px;
-
+    background: #ddd;
+    position: fixed;
+    visibility: hidden;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
 
     }  
 }
@@ -305,6 +345,7 @@ i{
     display: flex;
     justify-items: center;
     align-items: center;
+
 }
 
 .activo {
@@ -316,27 +357,8 @@ i{
     font-size: 30px;
 }
 
-fieldset{
-    text-align: center;
-}
 
-legend{
-    font-size: 30px;
-    font-weight: bold;
-}
-td{
-    padding-top: 10px;
-}
 
-.botonesCarrito button{
-    
-    background: var(--grisOscuro);
-    color: var(--silver);
-}
-.botonesCarrito button:hover{
-    background: var(--grisOscuro);
-    scale: 1.05;
-}
 
 .fa-fade, .fa-flip{
     --fa-animation-duration: 2s;
