@@ -36,6 +36,12 @@ export function agregarAlCarrito(id) {
       cancelButtonColor: "#d33",
       cancelButtonText: "No Agregar",
       confirmButtonText: "Sí, Agregar!",
+      showClass: {
+        popup: 'animate__animated animate__fadeInDown'
+      },
+      hideClass: {
+        popup: 'animate__animated animate__fadeOutUp'
+      },
       timer: 15000,
     }).then((result) => {
       if (result.isConfirmed) {
@@ -132,10 +138,7 @@ export function mostrarCarrito(carritoDeCompra) {
     let tr1 = document.createElement("tr");
     tr1.classList = "resultado filas";
     tr1.innerHTML = `
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
+      <td colspan="4"></td>
       <td class="total">TOTAL</td>
       <td class="total">$ ${total}</td>
     
@@ -167,6 +170,12 @@ export function eliminaDelCarrito(id) {
     cancelButtonColor: "#d33",
     cancelButtonText: "No Eliminar",
     confirmButtonText: "Sí, Eliminar!",
+    showClass: {
+      popup: 'animate__animated animate__fadeInDown'
+    },
+    hideClass: {
+      popup: 'animate__animated animate__fadeOutUp'
+    }
   }).then((result) => {
     if (result.isConfirmed) {
       //elimino del carrito el producto especificado mediante su indice
