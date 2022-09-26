@@ -1,0 +1,35 @@
+:root{
+    --fp :'Poppins', sans-serif;
+    --celeste: #0652DD;
+    --celesteOscuro: #2980b9;
+    --verde: #2ecc71;
+    --violeta: #9b59b6;
+    --grisConcreto: #95a5a6;
+    --grisOscuro: #2c3e50;
+    --grisFuerte:#334;
+    --silver: #bdc3c7;
+    --rojo:#EA2027;
+    --radio: 10px;
+}
+
+html{
+    font-family: var(--fp);
+    font-size: 20px;
+    background-color: #000;
+
+}
+
+h1,h2, h3{
+    
+    text-align:left;
+    color: var(--silver);
+    margin: 0;
+    padding: 25px;
+}
+
+i{
+    cursor: pointer;
+    padding: 5px;
+    vertical-align: center;
+    
+}

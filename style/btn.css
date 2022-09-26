@@ -1,0 +1,33 @@
+
+
+.btn{
+    display: flex;
+    background-color: var(--silver);
+    border-radius: var(--radio);
+    border: none;
+    color: var(--grisOscuro);
+    box-shadow: 1px 1px 3px 0 #000;
+    justify-content: center;
+    padding: 10px;
+    
+    
+}
+
+.btn:hover{
+    cursor: pointer;
+    color: var(--silver);
+    background: var(--grisFuerte);
+    outline:  1px solid var(--celeste);
+   
+}
+
+.btn-activado{
+    color: var(--silver);
+    background: var(--grisFuerte);
+    outline:  1px solid var(--celeste);
+
+}
+.btn-comprar{
+    margin: 0px;
+    width: 100%;
+}

@@ -1,0 +1,41 @@
+.nav{
+    background-color: var(--grisOscuro);
+    padding: 10px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    
+   
+}
+
+.nav span{
+    color: var(--silver);
+    
+}
+.nav input{
+    border: none;
+    border-radius: 50px;
+    padding: 5px;
+    text-align: center;
+}
+.par{
+    margin: 5px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 5px;
+    }
+    .par button{
+        margin: 5px;
+        
+    }
+    .par span{
+        text-align: center;
+        display: flex;
+        align-items: center;
+    }
+    
+    #buscador{
+        width: 100%;
+    }
