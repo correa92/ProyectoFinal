@@ -186,36 +186,51 @@ document.body.onload = function () {
   let btnVaciar = document.getElementById("btn-vaciar");
   btnVaciar.addEventListener("click", () => {
 
-    Swal.fire({
-      title: `¿Vaciar Carrito?`,
-      text: "Se eliminaran las películas del carrito",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      cancelButtonText: "No vaciar",
-      confirmButtonText: "Sí, vaciar!"
-  
-    }).then((result) => {
-  
-      if (result.isConfirmed) {
-        carritoCompra = [];
-        localStorage.removeItem('carrito');
-        mostrarCarrito(carritoCompra);
-        //se actualiza el valor del carrito en la pantalla principal
-        actualizaCantidad(carritoCompra);
-  
-        Swal.fire({
-          title: "Eliminado!",
-          text: "El carrito se vació correctamente.",
-          icon: "success",
-          timer: 3500,
-          showConfirmButton: false
+    if( carritoCompra.length!=0){
+
+      Swal.fire({
+        title: `¿Vaciar Carrito?`,
+        text: "Se eliminaran las películas del carrito",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        cancelButtonText: "No vaciar",
+        confirmButtonText: "Sí, vaciar!"
+    
+      }).then((result) => {
+    
+        if (result.isConfirmed) {
+          carritoCompra = [];
+          localStorage.removeItem('carrito');
+          mostrarCarrito(carritoCompra);
+          //se actualiza el valor del carrito en la pantalla principal
+          actualizaCantidad(carritoCompra);
+    
+          Swal.fire({
+            title: "Eliminado!",
+            text: "El carrito se vació correctamente.",
+            icon: "success",
+            timer: 3500,
+            showConfirmButton: false
+          }
+          );
         }
-        );
-      }
-    });
-  });
+      });//fin Swal.fire
+    }else{
+      Swal.fire({
+        title: `Vacío`,
+        text: "El carrito se encuentra vacío",
+        icon: "warning",
+        showCancelButton: false,
+        confirmButtonColor: "#3085d6",
+        confirmButtonText: "Entendido"
+      })
+
+    }
+
+
+  });// fin vaciar Carrito
 
 
 // confirmar compra del carrito
@@ -223,36 +238,48 @@ document.body.onload = function () {
   btnConfirmar.addEventListener("click", () => {
     mostrarCarrito(carritoCompra);
 
+    if(carritoCompra.length != 0){
+
+      Swal.fire({
+        title: `¿Confirmar Compra?`,
+        text: "Se confirmará la compra de los productos del carrito.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        cancelButtonText: "No comprar",
+        confirmButtonText: "Sí, comprar!"
     
-    Swal.fire({
-      title: `¿Confirmar Compra?`,
-      text: "Se confirmará la compra de los productos del carrito.",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      cancelButtonText: "No comprar",
-      confirmButtonText: "Sí, comprar!"
-  
-    }).then((result) => {
-  
-      if (result.isConfirmed) {
-        carritoCompra = [];
-        localStorage.removeItem('carrito');
-        mostrarCarrito(carritoCompra);
-        //se actualiza el valor del carrito en la pantalla principal
-        actualizaCantidad(carritoCompra);
-  
-        Swal.fire({
-          title: "Felicitaciones!",
-          text: "La compra se realizó correctamente.",
-          icon: "success",
-          timer: 3500,
-          showConfirmButton: false
+      }).then((result) => {
+    
+        if (result.isConfirmed) {
+          carritoCompra = [];
+          localStorage.removeItem('carrito');
+          mostrarCarrito(carritoCompra);
+          //se actualiza el valor del carrito en la pantalla principal
+          actualizaCantidad(carritoCompra);
+    
+          Swal.fire({
+            title: "Felicitaciones!",
+            text: "La compra se realizó correctamente.",
+            icon: "success",
+            timer: 3500,
+            showConfirmButton: false
+          }
+          );
         }
-        );
-      }
-    });
+      });// fin SwalFire
+    }else{
+      Swal.fire({
+        title: `Error`,
+        text: "Debe ingresar productos al carrito!.",
+        icon: "error",
+        showCancelButton: false,
+        confirmButtonColor: "#3085d6",
+        confirmButtonText: "Entendido"
+      })
+    }
+    
   });
 
 

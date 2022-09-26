@@ -14,43 +14,63 @@ export class Producto {
   subtotal = () => this.precio * this.cantidadTicket;
 } // class Producto
 
+function verificaCarrito(id) {
+  for (const elem of carritoCompra) {
+    if (elem.id == id) {
+      return true;
+    }
+  }
+  return false;
+}
+
 export function agregarAlCarrito(id) {
   let objeto = peliculasEnCartelera.filter((e) => e.id == id);
 
-  Swal.fire({
-    title: `¿Agregar ${objeto[0].nombrePelicula} en ${objeto[0].formato}?`,
-    text: "La película se agregará al carrito",
-    icon: "warning",
-    showCancelButton: true,
-    confirmButtonColor: "#3085d6",
-    cancelButtonColor: "#d33",
-    cancelButtonText: "No Agregar",
-    confirmButtonText: "Sí, Agregar!",
-    timer:15000,
-  }).then((result) => {
-    if (result.isConfirmed) {
-      let pedido = new Producto(
-        objeto[0].id,
-        1,
-        objeto[0].precio,
-        objeto[0].nombrePelicula,
-        objeto[0].formato
-      );
-      carritoCompra.push(pedido);
-      actualizaCantidad();
+  if (!verificaCarrito(objeto[0].id)) {
+    Swal.fire({
+      title: `¿Agregar ${objeto[0].nombrePelicula} en ${objeto[0].formato}?`,
+      text: "La película se agregará al carrito",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "No Agregar",
+      confirmButtonText: "Sí, Agregar!",
+      timer: 15000,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        let pedido = new Producto(
+          objeto[0].id,
+          1,
+          objeto[0].precio,
+          objeto[0].nombrePelicula,
+          objeto[0].formato
+        );
+        carritoCompra.push(pedido);
+        actualizaCantidad();
 
-      Swal.fire({
-        title: "Excelente!",
-        text: "La pelicula se agregó al carrito correctamente",
-        // imageUrl: ` ${objeto[0].imagen}`, 
-        // imageHeight: 200,
-        icon: "success",
-        timer: 3500,
-        showConfirmButton: false
+        Swal.fire({
+          title: "Excelente!",
+          text: "La pelicula se agregó al carrito correctamente",
+          // imageUrl: ` ${objeto[0].imagen}`,
+          // imageHeight: 200,
+          icon: "success",
+          timer: 3500,
+          showConfirmButton: false,
+        });
       }
-      );
-    }
-  });
+    });
+  } else {
+    Swal.fire({
+      title: `${objeto[0].nombrePelicula} en ${objeto[0].formato} `,
+      text: "Ya se encuentra en el carrito",
+      icon: "warning",
+      showCancelButton: false,
+      confirmButtonColor: "#3085d6",
+      confirmButtonText: "Entendido",
+      timer: 10000,
+    })
+  }
 }
 
 export function actualizaCantidad() {
@@ -137,7 +157,7 @@ export function eliminaDelCarrito(id) {
       break;
     }
   }
-  
+
   Swal.fire({
     title: `¿Eliminar ${carritoCompra[index].nombrePelicula}?`,
     text: "La película se eliminará del carrito",
@@ -146,10 +166,8 @@ export function eliminaDelCarrito(id) {
     confirmButtonColor: "#3085d6",
     cancelButtonColor: "#d33",
     cancelButtonText: "No Eliminar",
-    confirmButtonText: "Sí, Eliminar!"
-
+    confirmButtonText: "Sí, Eliminar!",
   }).then((result) => {
-
     if (result.isConfirmed) {
       //elimino del carrito el producto especificado mediante su indice
       carritoCompra.splice(index, 1);
@@ -167,12 +185,10 @@ export function eliminaDelCarrito(id) {
         text: "La película se eliminó del carrito correctamente.",
         icon: "success",
         timer: 3500,
-        showConfirmButton: false
-      }
-      );
+        showConfirmButton: false,
+      });
     }
   });
-
 }
 
 export function escuchaBtnEliminar() {
@@ -209,7 +225,8 @@ export function actualizarLocalStorage() {
   //borro el localStorage para luego actualizar con el producto nuevo
   localStorage.removeItem("carrito");
 
-  carritoCompra.length != 0 && localStorage.setItem("carrito", JSON.stringify(carritoCompra));
+  carritoCompra.length != 0 &&
+    localStorage.setItem("carrito", JSON.stringify(carritoCompra));
   //agrego al storage el carrito actualizado
 }
 
