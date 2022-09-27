@@ -86,15 +86,15 @@ export function main() {
     <h3>Contacto</h3>
   </div>
   <div class="contenedor-social">
-    <a href="https://www.linkedin.com/in/correa-alejandro-ezequiel-dev92/"><i class="fa-brands fa-linkedin fa-fade"></i>Correa Alejandro E.</a>
-    <a href="https://github.com/correa92"><i class="fa-brands fa-fade fa-github"></i>correa92</a>
-    <a href=" https://wa.me/1131397348" target="_blank"><i class="fa-brands fa-whatsapp fa-fade"></i>11-31397348</a>
-    <a href=""><i class="fa-regular fa-envelope fa-fade"></i>correa92.dev@gmail.com</a>
-
-    <div class="derechos">
-      <p>&#169 2022 ALL RIGHTS RESERVED. By Correa Alejandro</p>
-    </div>
-  </div>        
+    <a href="https://www.linkedin.com/in/correa-alejandro-ezequiel-dev92/"><i class="fa-brands fa-linkedin fa-fade"></i></a>
+    <a href="https://github.com/correa92"><i class="fa-brands fa-fade fa-github"></i></a>
+    <a href=" https://wa.me/1131397348" target="_blank"><i class="fa-brands fa-whatsapp fa-fade"></i></a>
+    <a href="mailto: correa92.dev@gmail.com"><i class="fa-regular fa-envelope fa-fade"></i></a>
+  </div>
+  <div class="derechos">
+  <p>&#169 2022 ALL RIGHTS RESERVED.</p>
+  <p> By Correa Alejandro </p>
+</div>        
 </div> <!--contenedor-footer-->
 
 </footer>

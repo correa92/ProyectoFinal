@@ -1,7 +1,9 @@
 .contenedor-footer{
     background-color: #111;
-    
     border-top: 2px solid #0652DD;
+    display: flex;
+    flex-direction: column;
+
 }
 .contenedor-footer a{
     text-decoration: none;
@@ -9,20 +11,33 @@
 
 }
 
-.contenedor-footer h3{
-    display: flex;
-    justify-content: center;
-    padding: 20px;
-    font-size: 30px;
+.titulo-footer h3{
+text-align: center;
+font-size: 30px;
+padding: 10px;
 }
 
 .contenedor-social{
-    display: flex;
-    flex-direction: column;
     text-align: center;
+    display: flex;
+    justify-content: space-evenly;
+    padding: 15px;
+}
+.contenedor-social i{
+    background-color: var(--celeste);
+    font-size: 30px;
+    border-radius: 50%;
+    padding: 10px;
 }
 
 .derechos{
-    margin-top: 10px;
+    padding: 10px;
     background-color: var(--silver);
+    text-align: center;
+    width: 100%;
+}
+.derechos p{
+    margin: 0;
+    
+
 }

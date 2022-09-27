@@ -32,6 +32,15 @@
       #buscador{
           width: auto;
       }
+      .contenedor-social{
+        width: 400px;
+    }
+    .contenedor-footer{
+        align-items: center;
+    }
+    
+
+    
   }
   
   @media (min-width: 768px) {
