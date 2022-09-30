@@ -7,37 +7,61 @@ import {crearCartelera,
   traerBtn,
   main
 } from "./Cartelera.js";
-import {Pelicula} from "./Pelicula.js";
-import {mostrarCarrito, actualizaCantidad, escuchaBtnEliminar, revisaLocalStorage, actualizarLocalStorage, controladorTicket} from "./Carrito.js";
+// import {Pelicula} from "./Pelicula.js";
+import {mostrarCarrito, actualizaCantidad, escuchaBtnEliminar, revisaLocalStorage, controladorTicket} from "./Carrito.js";
 import { pedirUsuario } from "./Cliente.js";
 
 //-------------------------------variables---------------------------------
   
-  const formatosDisponibles = ["2D", "3D", "4D", "5D"];
-  const precioPorSala = [500, 600, 700, 800];
-  const generosDisponibles = ["ACCIÓN","SUSPENSO","TERROR","COMEDIA","ROMANTICA","INFANTIL"];
-  const idiomasDisponibles = ["INGLÉS-SUBTITULADO", "LATINO"];
+  // const formatosDisponibles = ["2D", "3D", "4D", "5D"];
+  // const precioPorSala = [500, 600, 700, 800];
+  // const generosDisponibles = ["ACCIÓN","SUSPENSO","TERROR","COMEDIA","ROMANTICA","INFANTIL"];
+  // const idiomasDisponibles = ["INGLÉS-SUBTITULADO", "LATINO"];
 
-  let peli1 = new Pelicula(0,"THOR, AMOR Y TRUENO",formatosDisponibles[1],generosDisponibles[0],"02/10/2022",idiomasDisponibles[1],1,precioPorSala[1],"./img/thor-amor-y-trueno-500x760.jpg");
-  let peli2 = new Pelicula(1,"JACK EN LA CAJA MALDITA",formatosDisponibles[0],"TERROR","08/12/2021",idiomasDisponibles[0],2,precioPorSala[0],"./img/jack-en-la-caja-maldita-2-el-despertar.jpg");
-  let peli3 = new Pelicula(2,"TOP GUN MAVERICK",formatosDisponibles[3],"INFANTIL","12/06/2022",idiomasDisponibles[1],3,precioPorSala[3],"./img/top-gun-2-maverick-500x760.jpg");
-  let peli4 = new Pelicula(3,"EL PERRO SAMURAI",formatosDisponibles[0],"INFANTIL","02/04/2022",idiomasDisponibles[1],4,precioPorSala[0],"./img/el-perro-samurai-500x760.jpg");
-  let peli5 = new Pelicula(4,"AFTER, AMOR INFINITO",formatosDisponibles[2],"ROMANTICA","23/10/2021",idiomasDisponibles[0],5,precioPorSala[2],"./img/after-amor-infinito-500x760.jpg");
-  let peli6 = new Pelicula(5,"INVITACION AL INFIERNO",formatosDisponibles[3],"TERROR","26/12/2022",idiomasDisponibles[0],6,precioPorSala[3],"./img/invitacion-al-infierno-500x760.jpg");
-  let peli7 = new Pelicula(6,"TREN BALA",formatosDisponibles[1],"ACCIÓN","20/09/2022",idiomasDisponibles[1],7,precioPorSala[1],"./img/tren-bala-500x760.jpg");
-  let peli8 = new Pelicula(7,"PRINCESA POR ACCIDENTE",formatosDisponibles[1],"INFANTIL","09/10/2022",idiomasDisponibles[1],8,precioPorSala[1],"./img/princesa-por-accidente-500x760.jpg");
+  // let peli1 = new Pelicula(0,"THOR, AMOR Y TRUENO",formatosDisponibles[1],generosDisponibles[0],"02/10/2022",idiomasDisponibles[1],1,precioPorSala[1],"./img/thor-amor-y-trueno-500x760.jpg");
+  // let peli2 = new Pelicula(1,"JACK EN LA CAJA MALDITA",formatosDisponibles[0],"TERROR","08/12/2021",idiomasDisponibles[0],2,precioPorSala[0],"./img/jack-en-la-caja-maldita-2-el-despertar.jpg");
+  // let peli3 = new Pelicula(2,"TOP GUN MAVERICK",formatosDisponibles[3],"INFANTIL","12/06/2022",idiomasDisponibles[1],3,precioPorSala[3],"./img/top-gun-2-maverick-500x760.jpg");
+  // let peli4 = new Pelicula(3,"EL PERRO SAMURAI",formatosDisponibles[0],"INFANTIL","02/04/2022",idiomasDisponibles[1],4,precioPorSala[0],"./img/el-perro-samurai-500x760.jpg");
+  // let peli5 = new Pelicula(4,"AFTER, AMOR INFINITO",formatosDisponibles[2],"ROMANTICA","23/10/2021",idiomasDisponibles[0],5,precioPorSala[2],"./img/after-amor-infinito-500x760.jpg");
+  // let peli6 = new Pelicula(5,"INVITACION AL INFIERNO",formatosDisponibles[3],"TERROR","26/12/2022",idiomasDisponibles[0],6,precioPorSala[3],"./img/invitacion-al-infierno-500x760.jpg");
+  // let peli7 = new Pelicula(6,"TREN BALA",formatosDisponibles[1],"ACCIÓN","20/09/2022",idiomasDisponibles[1],7,precioPorSala[1],"./img/tren-bala-500x760.jpg");
+  // let peli8 = new Pelicula(7,"PRINCESA POR ACCIDENTE",formatosDisponibles[1],"INFANTIL","09/10/2022",idiomasDisponibles[1],8,precioPorSala[1],"./img/princesa-por-accidente-500x760.jpg");
 
-  export let peliculasEnCartelera = [peli1,peli2,peli3,peli4,peli5,peli6,peli7,peli8];
+  // export let peliculasEnCartelera = [peli1,peli2,peli3,peli4,peli5,peli6,peli7,peli8];
   
-  // export let carritoCompra = carrito;
-  export let carritoCompra = [];
+//convierto las peliculas en un formato json para utilizar el fetch
+// let arrayAjson = JSON.stringify(peliculasEnCartelera);
+
+export let peliculasEnCartelera =[];
+  
+export let carritoCompra = [];
 
 document.body.onload = function () {  
 
+  const obtenerDatos = async () => {
 
+    try {
+      const response = await fetch("../data.json");
+      const data = await response.json();
+      //cada pelicula lo agrego al array peliculasEnCartelera
+      for (const elem of data) {
+        peliculasEnCartelera.push(elem);
+      }
+      
+      //una vez que se termina de cargar los elementos de peliculasEnCartelera, actualizo para pagina principal para mostrarlos
+      crearCartelera(peliculasEnCartelera);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  //solicito los datos al servidor
+  obtenerDatos();
+  
   //-----------------------------------------------Programa Principal-----------------------------------------------------------------------------
   //muestro el contenido principal
   main();
+
   pedirUsuario();
   //revisa el localStorage que tenga productos y actualiza la cantidad de productos en la pantalla principal
   revisaLocalStorage();

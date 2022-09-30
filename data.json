@@ -1,0 +1,8 @@
+[{"id":0,"nombrePelicula":"THOR, AMOR Y TRUENO","formato":"3D","genero":"ACCIÓN","estreno":"02/10/2022","idioma":"LATINO","sala":1,"precio":600,"imagen":"./img/thor-amor-y-trueno-500x760.jpg"},
+{"id":1,"nombrePelicula":"JACK EN LA CAJA MALDITA","formato":"2D","genero":"TERROR","estreno":"08/12/2021","idioma":"INGLÉS-SUBTITULADO","sala":2,"precio":500,"imagen":"./img/jack-en-la-caja-maldita-2-el-despertar.jpg"},
+{"id":2,"nombrePelicula":"TOP GUN MAVERICK","formato":"5D","genero":"INFANTIL","estreno":"12/06/2022","idioma":"LATINO","sala":3,"precio":800,"imagen":"./img/top-gun-2-maverick-500x760.jpg"},
+{"id":3,"nombrePelicula":"EL PERRO SAMURAI","formato":"2D","genero":"INFANTIL","estreno":"02/04/2022","idioma":"LATINO","sala":4,"precio":500,"imagen":"./img/el-perro-samurai-500x760.jpg"},
+{"id":4,"nombrePelicula":"AFTER, AMOR INFINITO","formato":"4D","genero":"ROMANTICA","estreno":"23/10/2021","idioma":"INGLÉS-SUBTITULADO","sala":5,"precio":700,"imagen":"./img/after-amor-infinito-500x760.jpg"},
+{"id":5,"nombrePelicula":"INVITACION AL INFIERNO","formato":"5D","genero":"TERROR","estreno":"26/12/2022","idioma":"INGLÉS-SUBTITULADO","sala":6,"precio":800,"imagen":"./img/invitacion-al-infierno-500x760.jpg"},
+{"id":6,"nombrePelicula":"TREN BALA","formato":"3D","genero":"ACCIÓN","estreno":"20/09/2022","idioma":"LATINO","sala":7,"precio":600,"imagen":"./img/tren-bala-500x760.jpg"},
+{"id":7,"nombrePelicula":"PRINCESA POR ACCIDENTE","formato":"3D","genero":"INFANTIL","estreno":"09/10/2022","idioma":"LATINO","sala":8,"precio":600,"imagen":"./img/princesa-por-accidente-500x760.jpg"}]

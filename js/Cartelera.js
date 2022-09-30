@@ -22,7 +22,7 @@ export function main() {
     </div>
 
     <div class="par">
-      <span>Sala</span>
+      <span>Sala </span>
       <button class="btn" id="btn-2D">2D</button>
       <button class="btn" id="btn-3D">3D</button>
       <button class="btn" id="btn-4D">4D</button>
@@ -30,7 +30,7 @@ export function main() {
     </div>
 
     <div class="par">
-      <span>Idioma</span>
+      <span>Idioma </span>
       <button class="btn" id="btn-subtitulo">Subtitulado</button>
       <button class="btn" id="btn-espaniol">Español</button>
     </div>
@@ -53,7 +53,7 @@ export function main() {
   </main>
 </div>
 
-<div class="contenedor-carrito" id="contenedor-carrito">
+<div class="contenedor-carrito  " id="contenedor-carrito">
   <fieldset>
     <legend>Carrito de Compras</legend>
 

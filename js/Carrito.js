@@ -54,7 +54,7 @@ export function agregarAlCarrito(id) {
         );
         carritoCompra.push(pedido);
         actualizaCantidad();
-
+        actualizarLocalStorage();
         Swal.fire({
           title: "Excelente!",
           text: "La pelicula se agregó al carrito correctamente",
@@ -138,9 +138,10 @@ export function mostrarCarrito(carritoDeCompra) {
     let tr1 = document.createElement("tr");
     tr1.classList = "resultado filas";
     tr1.innerHTML = `
+    
       <td colspan="4"></td>
-      <td class="total">TOTAL</td>
-      <td class="total">$ ${total}</td>
+      <td class="total"><hr/>TOTAL</td>
+      <td class="total"><hr/>$ ${total}</td>
     
     `;
 
