@@ -41,7 +41,7 @@ document.body.onload = function () {
   const obtenerDatos = async () => {
 
     try {
-      const response = await fetch("../data.json");
+      const response = await fetch("./data.json");
       const data = await response.json();
       //cada pelicula lo agrego al array peliculasEnCartelera
       for (const elem of data) {
@@ -306,14 +306,6 @@ document.body.onload = function () {
     
   });
 
-
-
-
-
-
-  
-
-  
 }; //onload
 
 
