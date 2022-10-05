@@ -189,6 +189,8 @@ export function eliminaDelCarrito(id) {
       actualizarLocalStorage();
       // vuelvo a escuchar los botones de eliminar en el carrito
       escuchaBtnEliminar();
+      
+      controladorTicket();
 
       Swal.fire({
         title: "Eliminado!",
